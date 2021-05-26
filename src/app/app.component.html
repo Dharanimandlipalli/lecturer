@@ -1,0 +1,162 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+  <div class="collapse navbar-collapse" id="navbarColor02">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" (click)="onOpenModal(lecturers,'add')">Add Lecturer <span class="sr-only">(current)</span></a>
+
+      </li>
+    </ul>
+
+  </div>
+
+
+</nav>
+
+
+
+<!--add Lecturer -->
+<div class="container" id="main-container">
+  <div class="row">
+    <div *ngFor="let lecturer of lecturers" class="col-md-6 col-xl-3">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"> Id :
+          {{lecturer?.id}}</li>
+        <li class="list-group-item">Name :
+          {{lecturer?.name}}</li>
+
+        <li class="list-group-item">Email :
+          {{lecturer?.email}}</li>
+        <li class="list-group-item"> Phonenumber :
+          {{lecturer?.phonenumber}}
+        </li>
+      </ul>
+
+      <div class="float-right btn-group btn-group-sm">
+        <a (click)="onOpenModal(lecturer, 'edit')" class="btn btn-primary tooltips" data-placement="top"
+          data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+        <a (click)="onOpenModal(lecturer, 'delete')" class="btn btn-secondary tooltips" data-placement="top"
+          data-original-title="Delete"><i class="fa fa-trash"></i></a>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Lecturer Modal -->
+<div class="modal fade" id="addLecturerModal" tabindex="-1" role="dialog" aria-labelledby="addLecturerModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addlecturerModalLabel">Add Lecturer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #addForm="ngForm" (ngSubmit)="onAddLecturer(addForm)">
+          <div class="form-group">
+            <label for="id">Lecturer Id</label>
+            <input type="number" ngModel name="id" class="form-control" id="id" required>
+          </div>
+          <div class="form-group">
+            <label for="name">Lecturer name</label>
+            <input type="text" ngModel name="name" class="form-control" id="name" required>
+          </div>
+
+
+          <div class="form-group">
+            <label for="email">Lecturer Email </label>
+            <input type="email" ngModel name="email" class="form-control" id="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phonenumber">Lecturer Phoneumber</label>
+            <input type="number" ngModel name="phonenumber" class="form-control" id="phonenumber" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="add-lecturer-form" class="btn btn-secondary" data-dismiss="modal"
+              (click)="cancel()">Cancel</button>
+            <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Save
+            </button>
+          </div>
+
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Edit Modal -->
+<div class="modal fade" id="updateLecturerModal" tabindex="-1" role="dialog" aria-labelledby="lecturerEditModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateLecturerModalLabel">Edit Lecturer {{editLecturer?.id}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #editForm="ngForm">
+          <div class="form-group">
+            <label for="id">Lecturer Id</label>
+            <input type="number" ngModel="{{editLecturer?. id}}" name="id" class="form-control" id="id">
+          </div>
+          <div class="form-group">
+            <label for=" name">Lecturer name</label>
+            <input type="text" ngModel="{{editLecturer?. name}}" name="name" class="form-control" id="name">
+          </div>
+
+
+          <div class="form-group">
+            <label for="email">Lecturer Email</label>
+            <input type="email" ngModel="{{editLecturer?.email}}" name="email" class="form-control" id="email" required>
+          </div>
+          <div class="form-group">
+            <label for="phonenumber">Lecturer Phoneumber</label>
+            <input type="number" ngModel="{{editLecturer?.phonenumber}}" name="phonenumber" class="form-control"
+              id="phonenumber" required>
+          </div>
+
+
+
+          <div class="modal-footer">
+            <button type="button" id="" data-dismiss="modal" class="btn btn-secondary" data-dismiss="modal"
+              (click)="cancel()">Cancel</button>
+            <button (click)="onUpdateLecturer(editForm.value)" data-dismiss="modal" class="btn btn-primary">Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteLecturerModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Delete Lecturer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete lecturer {{deleteLecturer?.id}}?</p>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <button (click)="onDeleteLecturer(deleteLecturer?.id)" class="btn btn-danger"
+            data-dismiss="modal">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
